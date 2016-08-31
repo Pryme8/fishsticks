@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>fishsticks.js - HTML5 Web Worker Game Engine 0.0.1</title>
+<script type="text/javascript" src="./core/fishsticks.0.0.1.js"></script>
+</head>
+
+<body>
+<center><canvas id='fsCanvas' width='600px' height="600px" style="background:#CCC;"></canvas></center>
+<script>
+var fse = new fs('fsCanvas',{fps:90});
+var currentScene = fse.GetActiveScene();
+console.log(currentScene);
+var circle = currentScene.CreatePrim('CIRCLE', 'First Circle', {position:new vec2(0,-240), radius:20});
+circle._AddBody({radius:20});
+circle.setPhysics({mass:1});
+
+circle = currentScene.CreatePrim('CIRCLE', '2nd Circle', {position:new vec2(0,0), radius:40});
+circle._AddBody({radius:40});
+circle.setPhysics({mass:1});
+
+circle = currentScene.CreatePrim('CIRCLE', '3rd Circle', {position:new vec2(0,240), radius:60});
+circle._AddBody({radius:60});
+circle.setPhysics({mass:0});
+
+/*var box = currentScene.CreatePrim('BOX', 'First BOX', {position:new vec2(0,240), width:300, height:20, fillColor:'red'});
+box._AddBody({width:300, height:20});
+box.setPhysics({mass:0});
+var poly = currentScene.CreatePrim('POLY', 'First Polygon', {position:new vec2(0,200),
+points:[
+new vec2(-50,-50),
+new vec2(70,-30),
+new vec2(50,20),
+new vec2(-10, 40),
+new vec2(-30, 20)],
+});
+poly._AddBody({points: poly.shape.points});
+poly.setPhysics({mass:0});*/
+
+
+fse.StartScene({});
+
+
+
+
+</script>
+</body>
+</html>
