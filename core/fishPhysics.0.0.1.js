@@ -225,7 +225,7 @@ Core.prototype._apply = function(calc, hit){
 	if(hit.a.physics.mass > 0 && hit.b.physics.mass > 0){
 		//console.log("HIT!");
 		console.log(hit);
-		p = calc.newPos.clone().subtract(hit.overlapN.scale(20));
+		p = calc.newPos.clone().subtract(hit.overlapN.scale(15));
 		v = calc.newVel.clone().reverse();
 		var p2 = hit.b.position.clone();
 		v2 = hit.b.physics.velocity.clone().reverse();
@@ -246,7 +246,7 @@ Core.prototype._apply = function(calc, hit){
 
 	}else{
 		
-		p = calc.newPos.clone().subtract(hit.overlapN.scale(20));
+		p = calc.newPos.clone().subtract(hit.overlapN.scale(15));
 		v = calc.newVel.clone().reverse();
 	
 	scene.stack[id].position.copy(p);
