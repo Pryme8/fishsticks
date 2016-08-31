@@ -222,9 +222,31 @@ Core.prototype._apply = function(calc, hit){
 	calc.newVel = [v.x,v.y];
 	
 	}else{
+	if(hit.a.physics.mass > 0 && hit.b.physics.mass > 0){
 		//console.log("HIT!");
-		//console.log(hit);
-		p = calc.newPos.clone().subtract(hit.overlapN.scale(10));
+		console.log(hit);
+		p = calc.newPos.clone().subtract(hit.overlapN.scale(20));
+		v = calc.newVel.clone().reverse();
+		var p2 = hit.b.position.clone();
+		v2 = hit.b.physics.velocity.clone().reverse();
+		var id2 = hit.b.stackID;
+		scene.stack[id].position.copy(p);
+		scene.stack[id].physics.velocity.copy(v);
+		scene.stack[id2].position.copy(p2);
+		scene.stack[id2].physics.velocity.copy(v2);
+		
+		calc2 = calc;
+		calc2.stackID = id2;
+		calc.newPos = [p.x,p.y];
+		calc.newVel = [v.x,v.y];
+		calc2.newPos = [p2.x,p2.y];
+		calc2.newVel = [v2.x,v2.y];
+		
+		postMessage(['apply',calc2]);
+
+	}else{
+		
+		p = calc.newPos.clone().subtract(hit.overlapN.scale(20));
 		v = calc.newVel.clone().reverse();
 	
 	scene.stack[id].position.copy(p);
@@ -232,7 +254,7 @@ Core.prototype._apply = function(calc, hit){
 
 	calc.newPos = [p.x,p.y];
 	calc.newVel = [v.x,v.y];
-
+	}
 	//clearInterval(this._int);
 	}
 	
