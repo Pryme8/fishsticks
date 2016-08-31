@@ -166,9 +166,10 @@ Core.prototype._run = function(){
 		var hitResults = this._StartTest(obj, tempCalc);
 		var hit = false;
 		for(var i=0; i < hitResults.length; i++){
-			if(typeof hitResults[i] == 'object' && hitResults[i].a.physics.mass > 0){
-			hit = hitResults[i];
-			
+			if(typeof hitResults[i] == 'object' && hitResults[i].a.physics.mass != 0 ){
+					
+					hit = hitResults[i];
+				
 			}
 		}	
 		
@@ -215,13 +216,42 @@ Core.prototype._apply = function(calc, hit){
 	if(hit == false){
 		p = calc.newPos.clone();
 		v = calc.newVel.clone();
-	scene.stack[id].position.copy(p);
-	scene.stack[id].physics.velocity.copy(v);
+	scene.stack[id].position = p.clone();
+	scene.stack[id].physics.velocity = v.clone();
 
 	calc.newPos = [p.x,p.y];
 	calc.newVel = [v.x,v.y];
 	
 	}else{
+		if(hit.a.physics.mass != 0 && hit.b.physics.mass != 0){
+			//BOTH HAVE MASS.
+		}else if(hit.a.physics.mass != 0 && hit.b.physics.mass == 0){
+			//OBJECT A HAS MASS
+			p = calc.newPos.clone().subtract(hit.overlapV.scale(6));
+			v = calc.newVel.clone().reverse().scale(hit.a.physics.bounce + hit.a.physics.bounce * 0.5);
+	
+			scene.stack[id].position = p.clone();
+			scene.stack[id].physics.velocity = v.clone();
+
+			calc.newPos = [p.x,p.y];
+			calc.newVel = [v.x,v.y];
+			
+		}else if(hit.a.physics.mass == 0 && hit.b.physics.mass != 0){
+			//OBJECT B AS MASS
+			id = hit.b.stackID;
+			p = calc.newPos.clone().subtract(hit.overlapV.scale(6));
+			v = calc.newVel.clone().reverse().scale(hit.a.physics.bounce + hit.a.physics.bounce * 0.5);
+	
+			scene.stack[id].position = p.clone();
+			scene.stack[id].physics.velocity = v.clone();
+			
+			calc.stackID = id;
+			calc.newPos = [p.x,p.y];
+			calc.newVel = [v.x,v.y];
+			
+		}
+		
+		/*
 	if(hit.a.physics.mass > 0 && hit.b.physics.mass > 0){
 		//console.log("HIT!");
 		console.log(hit);
@@ -246,17 +276,12 @@ Core.prototype._apply = function(calc, hit){
 
 	}else{
 		
-		p = calc.newPos.clone().subtract(hit.overlapN.scale(15));
-		v = calc.newVel.clone().reverse();
-	
-	scene.stack[id].position.copy(p);
-	scene.stack[id].physics.velocity.copy(v);
-
-	calc.newPos = [p.x,p.y];
-	calc.newVel = [v.x,v.y];
+		
 	}
 	//clearInterval(this._int);
+	*/
 	}
+	
 	
 	postMessage(['apply',calc]);
 	
@@ -614,7 +639,7 @@ Core.Test.Circle2Circle = function (a, b, preCalc) {
       response.b = b;
       response.overlap = totalRadius - dist;
       response.overlapN = differenceV.clone().normalize();
-      response.overlapV = differenceV.clone().scale(response.overlap);
+      response.overlapV = response.overlapN.clone().scale(response.overlap);
       response.aInB= a.body.radius <= b.body.radius && dist <= b.body.radius - a.body.radius;
       response.bInA = b.body.radius <= a.body.radius && dist <= a.body.radius - b.body.radius;
    

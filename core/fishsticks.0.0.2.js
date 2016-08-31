@@ -137,7 +137,7 @@ fs = function(canvas, args){
 	this._ctx = this._canvas.getContext('2d');
 	this._engine = new fs.ENGINE(this);//Start the Engine.
 
-	this._pWork = new Worker('./core/fishPhysics.0.0.2.js');
+	this._pWork = new Worker('./core/fishix.0.0.2.js');
 	this._BindWorker();
 	this._pWork.postMessage(['init', {gravity:[0,0.096]}]);
 	
@@ -481,8 +481,8 @@ fs.PHYSICS = function(args){
 	targs.on = args.on || true; //Enable the Phsyics on this object.
 	targs.mass = args.mass || 0; //Have Gravity and Impulses Effect this object. -1:1
 	targs.drag = args.drag || 0.99999; //Amount of Drag the Object has while in the Air. <0:1 -> 1 is No Drag.
-	targs.friction = args.friction || 0.5 ; //Amount of Contact Friction
-	targs.bounce = args.bounce || 0.35; // 0 for no Bounce < 1 is upper range.
+	targs.friction = args.friction || 0.65 ; //Amount of Contact Friction
+	targs.bounce = args.bounce || 0.5; // 0 for no Bounce < 1 is upper range.
 	this.velocity = args.intVel || new vec2();
 	this.torque = args.intTorque || 0;
 	this.settings = targs;

@@ -9,15 +9,11 @@
 <body>
 <center><canvas id='fsCanvas' width='600px' height="600px" style="background:#CCC;"></canvas></center>
 <script>
-var fse = new fs('fsCanvas',{fps:90});
+var fse = new fs('fsCanvas',{fps:60});
 var currentScene = fse.GetActiveScene();
 console.log(currentScene);
 var circle = currentScene.CreatePrim('CIRCLE', 'First Circle', {position:new vec2(0,-240), radius:20});
 circle._AddBody({radius:20});
-circle.setPhysics({mass:1});
-
-circle = currentScene.CreatePrim('CIRCLE', '2nd Circle', {position:new vec2(0,0), radius:40});
-circle._AddBody({radius:40});
 circle.setPhysics({mass:1});
 
 circle = currentScene.CreatePrim('CIRCLE', '3rd Circle', {position:new vec2(0,240), radius:60});
