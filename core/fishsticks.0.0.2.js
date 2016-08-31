@@ -1,4 +1,4 @@
-// fishsticks.js version 0.0.1 - Author: Andrew V Butt Sr. Pryme8@gmail.com
+// fishsticks.js version 0.0.2 - Author: Andrew V Butt Sr. Pryme8@gmail.com
 // This is an open source Javascript HTML5 Canvas 2D game Engine built for my tutorial
 // http://pryme8.github.io/NeatFlax/webWork
 
@@ -137,7 +137,7 @@ fs = function(canvas, args){
 	this._ctx = this._canvas.getContext('2d');
 	this._engine = new fs.ENGINE(this);//Start the Engine.
 
-	this._pWork = new Worker('./core/fishPhysics.0.0.1.js');
+	this._pWork = new Worker('./core/fishPhysics.0.0.2.js');
 	this._BindWorker();
 	this._pWork.postMessage(['init', {gravity:[0,0.096]}]);
 	
